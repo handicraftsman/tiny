@@ -9,7 +9,8 @@
  */
 
 TErrorDomain t_error_domain = 0;
-TErrorDomain t_error_domain_counter = 0;
+TErrorDomain t_error_domain_sys = 1;
+TErrorDomain t_error_domain_counter = 1;
 
 /* 
  * Error

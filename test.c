@@ -2,6 +2,7 @@
  * Includes
  */
 
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -61,7 +62,7 @@ void test_object_and_error() {
 
   sample_error(sample, &err);
   if (err != NULL) {
-    printf("Error: [%u:%u] %s\n", err->domain, err->code, err->message);
+    printf("[%zu:%zu] %s\n", err->domain, err->code, err->message);
   }
 
   t_error_clear(err);
@@ -168,12 +169,52 @@ void test_map() {
   printf("%s\n", ((char*) p4->unit->obj));
   t_unref(p4);
 
+  for (TListNode* n = t_list_first(map->pairs); n != NULL; n = t_list_next(n)) {
+    TMapPair* p = n->unit->obj;
+    printf("%s: %s\n", p->key, p->unit->obj);
+  }
+
   t_unref(map);
+}
+
+TQueue* get_queue() {
+  TQueue* queue = t_queue_new(0, 0);
+
+  for (int i = 0; i < 128; ++i) {
+    char* str;
+    asprintf(&str, "%d", i);
+    TGCUnit* u = t_gcunit_new_(str, t_free);
+    t_queue_push(queue, u);
+    t_unref(u);
+  }
+
+  return queue;
+}
+
+void test_queue() {
+  TQueue* q1 = get_queue();
+
+  for (int i = 0; i < q1->len; ++i) {
+    printf("%s\n", q1->arr[i]->obj);
+  }
+
+  t_unref(q1);
+
+
+  TQueue* q2 = get_queue();
+
+  for (TGCUnit* u = t_queue_pop(q2); u != NULL; u = t_queue_pop(q2)) {
+    printf("%s\n", u->obj);
+    t_unref(u);
+  }
+
+  t_unref(q2);
 }
 
 int main() {
   test_object_and_error();
   test_list();
   test_map();
+  test_queue();
   return 0;
 }

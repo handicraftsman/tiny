@@ -14,7 +14,7 @@ typedef struct TGCUnit {
   size_t ref_count;
   void* obj;
   TGCUnitDestructor destructor;
-  struct TGCUnit* t_gcunit_field;  
+  struct TGCUnit* _t_gcunit;  
 } TGCUnit;
 
 #define t_gcunit_use() TGCUnit* t_gcunit_field
