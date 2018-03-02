@@ -10,7 +10,7 @@
 TGCUnit* t_gcunit_new(void* obj, TGCUnitDestructor destructor) {
   TGCUnit* self = (TGCUnit*) t_malloc(sizeof(TGCUnit));
   if (!self) {
-    perror("t_gcunit_init");
+    perror("t_gcunit_new");
     exit(1);
   }
   self->ref_count      = 1;

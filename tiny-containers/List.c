@@ -10,7 +10,7 @@
 TListNode* t_list_node_new(TGCUnit* unit) {
   TListNode* self = (TListNode*) t_malloc(sizeof(TListNode));
   if (!self) {
-    perror("t_list_new");
+    perror("t_list_node_new");
     exit(1);
   }
 

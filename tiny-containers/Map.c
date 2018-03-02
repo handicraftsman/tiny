@@ -21,7 +21,7 @@ static uint64_t djb2(char* str) {
 static TMapPair* _t_map_pair_new_(uint64_t hash, char* key, TGCUnit* unit) {
   TMapPair* self = (TMapPair*) t_malloc(sizeof(TMapPair));
   if (!self) {
-    perror("t_list_new");
+    perror("t_map_pair_new");
     exit(1);
   }
 
@@ -66,7 +66,7 @@ void t_map_pair_rename(TMapPair* self, char* key) {
 TMap* t_map_new() {
   TMap* self = (TMap*) t_malloc(sizeof(TMap));
   if (!self) {
-    perror("t_list_new");
+    perror("t_map_new");
     exit(1);
   }
 

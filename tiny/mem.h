@@ -1,5 +1,7 @@
 #pragma once
 
+#include "tiny.h"
+
 #include <stddef.h>
 
 void* (*t_malloc)(size_t size);

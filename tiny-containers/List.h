@@ -1,5 +1,7 @@
 #pragma once
 
+#include "tiny.h"
+
 #include <stdbool.h>
 
 /*
@@ -41,13 +43,13 @@ TList* t_list_new();
 void t_list_destroy(TList* self);
 
 TListNode* t_list_append(TList* self, TGCUnit* unit);
-#define t_list_append_(self, obj) t_list_append(self, (obj)->t_gcunit_field)
+#define t_list_append_(self, obj) (t_list_append(self, t_gcunit(obj)))
 
 TListNode* t_list_prepend(TList* self, TGCUnit* unit);
-#define t_list_prepend_(self, obj) t_list_prepend(self, (obj)->t_gcunit_field)
+#define t_list_prepend_(self, obj) (t_list_prepend(self, t_gcunit(obj)))
 
 TListNode* t_list_insert(TList* self, TGCUnit* unit, size_t idx);
-#define t_list_insert_(self, obj, idx) t_list_insert(self, obj->t_gcunit_field, idx)
+#define t_list_insert_(self, obj, idx) (t_list_insert(self, t_gcunit(obj), idx))
 
 #define t_list_first(self) (self->first == NULL ? NULL : t_ref_(self->first))
 TListNode* t_list_next(TListNode* node);
