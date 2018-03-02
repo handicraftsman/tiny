@@ -177,44 +177,98 @@ void test_map() {
   t_unref(map);
 }
 
-TQueue* get_queue() {
-  TQueue* queue = t_queue_new(0, 0);
+TVector* get_vector() {
+  TVector* vector = t_vector_new(0, 0);
 
   for (int i = 0; i < 128; ++i) {
     char* str;
     asprintf(&str, "%d", i);
     TGCUnit* u = t_gcunit_new_(str, t_free);
-    t_queue_push(queue, u);
+    t_vector_push(vector, u);
     t_unref(u);
   }
 
-  return queue;
+  return vector;
 }
 
-void test_queue() {
-  TQueue* q1 = get_queue();
+void test_vector() {
+  TGCUnit* u = NULL;
 
-  for (int i = 0; i < q1->len; ++i) {
-    printf("%s\n", q1->arr[i]->obj);
-  }
-
-  t_unref(q1);
-
-
-  TQueue* q2 = get_queue();
-
-  for (TGCUnit* u = t_queue_pop(q2); u != NULL; u = t_queue_pop(q2)) {
+  TVector* v1 = get_vector();
+  for (int i = 0; i < v1->len; ++i) {
+    TGCUnit* u = v1->arr[i];
+    t_ref(u);
     printf("%s\n", u->obj);
     t_unref(u);
   }
+  t_unref(v1);
 
-  t_unref(q2);
+  u = NULL;
+  TVector* v2 = get_vector();
+  while ((u = t_vector_pop_back(v2), u != NULL)) {
+    printf("%s\n", u->obj);
+    t_unref(u);
+  }
+  t_unref(v2);
+
+
+  TVector* v3 = get_vector();
+  t_vector_remove(v3, 0);
+  t_vector_remove(v3, 1);
+  t_vector_remove(v3, 2);
+  for (int i = 0; i < v3->len; ++i) {
+    TGCUnit* u = t_vector_get(v3, i);
+    if (u == NULL) continue;
+    printf("%s\n", u->obj);
+    t_unref(u);
+  }
+  t_unref(v3);
+  
+
+  TVector* v4 = get_vector();
+  for (int i = 0; i < 16; ++i) {
+    char* str;
+    asprintf(&str, "%d", i*1000);
+    TGCUnit* u = t_gcunit_new_(str, t_free);
+    t_vector_insert(v4, u, i*2);
+    t_unref(u);
+  }
+  for (int i = 0; i < v4->len; ++i) {
+    TGCUnit* u = t_vector_get(v4, i);
+    if (u == NULL) continue;
+    printf("%s\n", u->obj);
+    t_unref(u);
+  }
+  t_unref(v4);
+
+  u = NULL;
+  TVector* v5 = get_vector();
+  while ((u = t_vector_pop_back(v5), u != NULL)) {
+    printf("%s\n", u->obj);
+    t_unref(u);
+  }
+  t_unref(v5);
+
+  u = NULL;
+  TVector* v6 = t_vector_new(0, 0);
+  for (int i = 0; i < 128; ++i) {
+    char* str;
+    asprintf(&str, "%d", i);
+    TGCUnit* u = t_gcunit_new_(str, t_free);
+    t_vector_push_front_(v6, u);
+    t_unref(u);
+  }
+  while ((u = t_vector_pop(v6), u != NULL)) {
+    printf("%s\n", u->obj);
+    t_unref(u);
+  }
+  t_unref(v6);
 }
 
 int main() {
   test_object_and_error();
   test_list();
   test_map();
-  test_queue();
+  test_vector();
   return 0;
 }
