@@ -10,7 +10,7 @@
 
 TErrorDomain t_error_domain = 0;
 TErrorDomain t_error_domain_sys = 1;
-TErrorDomain t_error_domain_counter = 1;
+TErrorDomain t_error_domain_counter = 2;
 
 TErrorDomain t_error_domain_get();
 
