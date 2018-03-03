@@ -15,7 +15,7 @@ TErrorDomain t_error_domain;
 TErrorDomain t_error_domain_sys;
 TErrorDomain t_error_domain_counter;
 
-inline TErrorDomain t_error_domain_get() { return ++t_error_domain; }
+TErrorDomain t_error_domain_get();
 
 typedef enum TErrors {
   TErrors_TEST = 1
