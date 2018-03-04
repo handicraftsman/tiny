@@ -46,7 +46,7 @@ void sample_print(Sample* self) {
 }
 
 void sample_error(Sample* self, TError** err) {
-  *err = t_error_new(t_error_domain, TErrors_TEST, self->str->obj);
+  *err = t_error_new(self->str->obj, false);
 }
 
 /*
@@ -62,7 +62,7 @@ void test_object_and_error() {
 
   sample_error(sample, &err);
   if (err != NULL) {
-    printf("[%zu:%zu] %s\n", err->domain, err->code, err->message);
+    printf("%s\n", err->message);
   }
 
   t_error_clear(err);

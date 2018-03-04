@@ -4,23 +4,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*
- * Error Domain
- */
-
-TErrorDomain t_error_domain = 0;
-TErrorDomain t_error_domain_sys = 1;
-TErrorDomain t_error_domain_counter = 4;
-
-TErrorDomain t_error_domain_get() {
-  return ++t_error_domain;
-}
-
 /* 
  * Error
  */
 
-TError* t_error_new(TErrorDomain domain, TErrorCode code, char* message) {
+TError* t_error_new(char* message, bool sys) {
   TError* self = (TError*) t_malloc(sizeof(TError));
   if (!self) {
     perror("t_error_new");
@@ -29,9 +17,8 @@ TError* t_error_new(TErrorDomain domain, TErrorCode code, char* message) {
 
   t_gcunit(self) = t_gcunit_new_(self, t_error_destroy);
 
-  self->domain  = domain;
-  self->code    = code;
   self->message = strdup(message);
+  self->sys     = sys;
 
   return self;
 }
