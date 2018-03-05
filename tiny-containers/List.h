@@ -59,3 +59,6 @@ TListNode* t_list_get(TList* self, size_t idx);
 bool t_list_swap(TList* self, TListNode* n1, TListNode* n2);
 
 void t_list_remove(TList* self, TListNode* node);
+
+#define t_list_foreach(self, val) \
+  for (TListNode* val = t_list_first(self); val != NULL; val = t_list_next(val))

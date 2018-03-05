@@ -120,7 +120,7 @@ void test_list() {
   t_unref(u3);
 
   printf("List Print #1\n");
-  for (TListNode* n = t_list_first(list); n != NULL; n = t_list_next(n)) {
+  t_list_foreach(list, n) {
     printf("  %s\n", n->unit->obj);
   }
 
@@ -129,7 +129,7 @@ void test_list() {
   t_unref(u4);
   
   printf("List Print #2\n");
-  for (TListNode* n = t_list_first(list); n != NULL; n = t_list_next(n)) {
+  t_list_foreach(list, n) {
     printf("  %s\n", n->unit->obj);
   }
 
@@ -168,6 +168,13 @@ void test_map() {
   TMapPair* p4 = t_map_get(map, "asdf");
   printf("%s\n", ((char*) p4->unit->obj));
   t_unref(p4);
+
+  for (TListNode* n = t_list_first(map->pairs); n != NULL; n = t_list_next(n)) {
+    TMapPair* p = n->unit->obj;
+    printf("%s: %s\n", p->key, p->unit->obj);
+  }
+
+  t_map_remove(map, "asdf");
 
   for (TListNode* n = t_list_first(map->pairs); n != NULL; n = t_list_next(n)) {
     TMapPair* p = n->unit->obj;

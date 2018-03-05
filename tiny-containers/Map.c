@@ -121,3 +121,15 @@ TMapPair* t_map_rename(TMap* self, char* key, char* new_key) {
     return NULL;
   }
 }
+
+bool t_map_remove(TMap* self, char* key) {
+  uint64_t hash = djb2(key);
+  for (TListNode* n = t_list_first(self->pairs); n != NULL; n = t_list_next(n)) {
+    if (((TMapPair*) n->unit->obj)->hash == hash) {
+      t_list_remove(self->pairs, n);
+      t_unref(n);
+      return true;
+    }
+  } 
+  return false;
+}

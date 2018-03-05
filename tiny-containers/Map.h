@@ -36,3 +36,4 @@ TMapPair* t_map_get(TMap* self, char* key);
 TMapPair* t_map_set(TMap* self, char* key, TGCUnit* unit);
 #define t_map_set_(self, key, obj) t_map_set(self, key, obj->t_gcunit_field)
 TMapPair* t_map_rename(TMap* self, char* key, char* new_key);
+bool t_map_remove(TMap* self, char* key);

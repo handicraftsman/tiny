@@ -66,7 +66,7 @@ TList* t_list_new() {
 }
 
 void t_list_destroy(TList* self) {
-  TListNode* next = NULL;;
+  TListNode* next = NULL;
   TListNode* n = self->first;
   while (n != NULL) {
     next = n->next;
