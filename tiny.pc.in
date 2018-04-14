@@ -1,5 +1,5 @@
 Name: tiny
 Description: A C utility library
 Version: @PROJECT_VERSION@
-Cflags: -I@CMAKE_INSTALL_PREFIX@/include/tiny/
+Cflags: -I@CMAKE_INSTALL_PREFIX@/include/
 Libs: -L@CMAKE_INSTALL_PREFIX@/lib/ -ltiny
