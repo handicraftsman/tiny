@@ -121,7 +121,6 @@ void test_list() {
 
   printf("List Print #1\n");
   t_list_foreach(list, n) {
-    printf("  %s\n", n->unit->obj);
   }
 
   TListNode* u4 = t_list_get(list, 2);
@@ -130,7 +129,6 @@ void test_list() {
   
   printf("List Print #2\n");
   t_list_foreach(list, n) {
-    printf("  %s\n", n->unit->obj);
   }
 
   t_unref(list);
@@ -144,7 +142,6 @@ void test_map() {
   t_unref(u1);
 
   TMapPair* p1 = t_map_get(map, "foo");
-  printf("%s\n", ((char*) p1->unit->obj));
   t_unref(p1);
   
   TGCUnit* u2 = t_gcunit_new(strdup("Baz"), t_free);
@@ -152,7 +149,6 @@ void test_map() {
   t_unref(u2);
 
   TMapPair* p2 = t_map_get(map, "foo");
-  printf("%s\n", ((char*) p2->unit->obj));
   t_unref(p2);
 
   TGCUnit* u3 = t_gcunit_new(strdup("spam"), t_free);
@@ -160,25 +156,21 @@ void test_map() {
   t_unref(u3);
 
   TMapPair* p3 = t_map_get(map, "quux");
-  printf("%s\n", ((char*) p3->unit->obj));
   t_unref(p3);
 
   t_unref(t_map_rename(map, "quux", "asdf"));
 
   TMapPair* p4 = t_map_get(map, "asdf");
-  printf("%s\n", ((char*) p4->unit->obj));
   t_unref(p4);
 
   for (TListNode* n = t_list_first(map->pairs); n != NULL; n = t_list_next(n)) {
     TMapPair* p = n->unit->obj;
-    printf("%s: %s\n", p->key, p->unit->obj);
   }
 
   t_map_remove(map, "asdf");
 
   for (TListNode* n = t_list_first(map->pairs); n != NULL; n = t_list_next(n)) {
     TMapPair* p = n->unit->obj;
-    printf("%s: %s\n", p->key, p->unit->obj);
   }
 
   t_unref(map);
@@ -189,7 +181,6 @@ TVector* get_vector() {
 
   for (int i = 0; i < 128; ++i) {
     char* str;
-    asprintf(&str, "%d", i);
     TGCUnit* u = t_gcunit_new_(str, t_free);
     t_vector_push(vector, u);
     t_unref(u);
@@ -205,7 +196,6 @@ void test_vector() {
   for (int i = 0; i < v1->len; ++i) {
     TGCUnit* u = v1->arr[i];
     t_ref(u);
-    printf("%s\n", u->obj);
     t_unref(u);
   }
   t_unref(v1);
@@ -213,7 +203,6 @@ void test_vector() {
   u = NULL;
   TVector* v2 = get_vector();
   while ((u = t_vector_pop_back(v2), u != NULL)) {
-    printf("%s\n", u->obj);
     t_unref(u);
   }
   t_unref(v2);
@@ -226,7 +215,6 @@ void test_vector() {
   for (int i = 0; i < v3->len; ++i) {
     TGCUnit* u = t_vector_get(v3, i);
     if (u == NULL) continue;
-    printf("%s\n", u->obj);
     t_unref(u);
   }
   t_unref(v3);
@@ -235,7 +223,6 @@ void test_vector() {
   TVector* v4 = get_vector();
   for (int i = 0; i < 16; ++i) {
     char* str;
-    asprintf(&str, "%d", i*1000);
     TGCUnit* u = t_gcunit_new_(str, t_free);
     t_vector_insert(v4, u, i*2);
     t_unref(u);
@@ -243,7 +230,6 @@ void test_vector() {
   for (int i = 0; i < v4->len; ++i) {
     TGCUnit* u = t_vector_get(v4, i);
     if (u == NULL) continue;
-    printf("%s\n", u->obj);
     t_unref(u);
   }
   t_unref(v4);
@@ -251,7 +237,6 @@ void test_vector() {
   u = NULL;
   TVector* v5 = get_vector();
   while ((u = t_vector_pop_back(v5), u != NULL)) {
-    printf("%s\n", u->obj);
     t_unref(u);
   }
   t_unref(v5);
@@ -260,13 +245,11 @@ void test_vector() {
   TVector* v6 = t_vector_new(0, 0);
   for (int i = 0; i < 128; ++i) {
     char* str;
-    asprintf(&str, "%d", i);
     TGCUnit* u = t_gcunit_new_(str, t_free);
     t_vector_push_front_(v6, u);
     t_unref(u);
   }
   while ((u = t_vector_pop(v6), u != NULL)) {
-    printf("%s\n", u->obj);
     t_unref(u);
   }
   t_unref(v6);

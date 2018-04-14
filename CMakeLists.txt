@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
-project(Tiny VERSION 0.4.0 LANGUAGES C)
+project(Tiny VERSION 0.6.0 LANGUAGES C)
 
 IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   SET(CMAKE_INSTALL_PREFIX /usr/ CACHE PATH "Default install prefix" FORCE)
@@ -24,8 +24,8 @@ install(
   LIBRARY DESTINATION lib
 )
 
-install(FILES tiny.h DESTINATION include/tiny)
+install(FILES tiny.h DESTINATION include)
 file(GLOB t_HDR tiny/*.h)
-install(FILES ${t_HDR} DESTINATION include/tiny/tiny)
+install(FILES ${t_HDR} DESTINATION include/tiny)
 file(GLOB tc_HDR tiny-containers/*.h)
-install(FILES ${tc_HDR} DESTINATION include/tiny/tiny-containers)
+install(FILES ${tc_HDR} DESTINATION include/tiny-containers)
