@@ -119,16 +119,16 @@ void test_list() {
   t_unref(t_list_insert_(list, u3, 0));
   t_unref(u3);
 
-  printf("List Print #1\n");
   t_list_foreach(list, n) {
+    // todo
   }
 
   TListNode* u4 = t_list_get(list, 2);
   t_list_remove(list, u4);
   t_unref(u4);
   
-  printf("List Print #2\n");
   t_list_foreach(list, n) {
+    // todo
   }
 
   t_unref(list);
@@ -180,7 +180,7 @@ TVector* get_vector() {
   TVector* vector = t_vector_new(0, 0);
 
   for (int i = 0; i < 128; ++i) {
-    char* str;
+    char* str = strdup("foo");
     TGCUnit* u = t_gcunit_new_(str, t_free);
     t_vector_push(vector, u);
     t_unref(u);
@@ -222,7 +222,7 @@ void test_vector() {
 
   TVector* v4 = get_vector();
   for (int i = 0; i < 16; ++i) {
-    char* str;
+    char* str = strdup("foo");
     TGCUnit* u = t_gcunit_new_(str, t_free);
     t_vector_insert(v4, u, i*2);
     t_unref(u);
@@ -244,7 +244,7 @@ void test_vector() {
   u = NULL;
   TVector* v6 = t_vector_new(0, 0);
   for (int i = 0; i < 128; ++i) {
-    char* str;
+    char* str = strdup("foo");
     TGCUnit* u = t_gcunit_new_(str, t_free);
     t_vector_push_front_(v6, u);
     t_unref(u);
